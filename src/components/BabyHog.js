@@ -16,25 +16,42 @@ class BabyHog extends Component {
   constructor(props) {
     super(props)
     this.state = {
-
+      name: props.hog.name,
+      weight: 200,
+      imgHeight: 200
     }
   }
 
   selectImg() {
-
+    return imgMapper[this.props.eyeColor]
   }
 
   changeWeight(event) {
     event.preventDefault()
-
+    if (event.target.id === "increase") {
+      console.log(this.props)
+      this.setState((prevState) => {
+        return {
+          imgHeight: prevState.imgHeight + 10,
+          weight: prevState.weight + 10
+        }
+      })
+    } else {
+      this.setState((prevState) => {
+        return {
+          imgHeight: prevState.imgHeight - 10,
+          weight: prevState.weight - 10
+        }
+      })
+    }
   }
 
   render() {
     return (
         <li className="hogbabies">
           <h1>{this.state.name}</h1>
-          <h3>Weight: {this.state.weight}</h3>
-          <h4>Eye Color: {this.state.eyeColor}</h4>
+          <h3>Weight: {this.state.weight} pounds</h3>
+          <h4>Eye Color: {this.props.eyeColor}</h4>
           <div className="wrap-crap">
             <Button animated id="increase" onClick={this.changeWeight.bind(this)}>
               <Button.Content id="increase" visible>Increase Weight</Button.Content>
@@ -43,7 +60,7 @@ class BabyHog extends Component {
               </Button.Content>
             </Button>
 
-            <Button animated onClick={this.changeWeight.bind(this)}>
+            <Button animated id="decrease" onClick={this.changeWeight.bind(this)}>
               <Button.Content visible>Decrease Weight</Button.Content>
               <Button.Content hidden>
                 <Icon name='minus' />
@@ -52,7 +69,7 @@ class BabyHog extends Component {
           </div>
 
 
-          <img src="{/* give correct img source component based on eyecolor prop */}" style={{height: `${this.state.imgHeight}px`}} alt="MasterBlasterJrJr" />
+          <img src={this.selectImg()} style={{height: `${this.state.imgHeight}px`}} alt="MasterBlasterJrJr" />
 
 
         </li>
