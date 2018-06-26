@@ -16,24 +16,35 @@ class BabyHog extends Component {
   constructor(props) {
     super(props)
     this.state = {
-
+      name: this.props.name,
+      eyeColor: this.props.eyeColor,
+      weight: this.props.weight
     }
   }
 
   selectImg() {
-
+    return imgMapper[this.state.eyeColor]
   }
 
   changeWeight(event) {
     event.preventDefault()
-
+    if (event.target.id == "increase") {
+      this.state.weight = (this.state.weight + 1)
+      var thing = document.getElementById('1')
+      thing.innerHTML = `Weight: ${this.state.weight}`
+    }
+    else if (event.target.className == "ui animated button") {
+      this.state.weight = (this.state.weight - 1)
+      var thing = document.getElementById('1')
+      thing.innerHTML = `Weight: ${this.state.weight}`
+    }
   }
 
   render() {
     return (
-        <li className="hogbabies">
-          <h1>{this.state.name}</h1>
-          <h3>Weight: {this.state.weight}</h3>
+        <li className='hogbabies'>
+          <h1>Name: {this.state.name}</h1>
+          <h3 id="1">Weight: {this.state.weight}</h3>
           <h4>Eye Color: {this.state.eyeColor}</h4>
           <div className="wrap-crap">
             <Button animated id="increase" onClick={this.changeWeight.bind(this)}>
@@ -52,7 +63,7 @@ class BabyHog extends Component {
           </div>
 
 
-          <img src="{/* give correct img source component based on eyecolor prop */}" style={{height: `${this.state.imgHeight}px`}} alt="MasterBlasterJrJr" />
+          <img src={this.selectImg()} style={{height: `${this.state.imgHeight}px`}} alt="MasterBlasterJrJr" />
 
 
         </li>
